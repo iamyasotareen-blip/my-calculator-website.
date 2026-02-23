@@ -3,334 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Tools Pro - Free Online Utilities</title>
-    <meta name="description" content="Best free online tools for students: Percentage Calculator, Age Calculator, and Word Counter.">
-    
-    <!-- Google Fonts for Professional Look -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <title>Pak Student Hub - Ultimate Tools</title>
     <style>
-        /* CSS Variables for Theme */
+        /* --- CSS STYLES --- */
         :root {
-            --primary-color: #4e54c8;
-            --secondary-color: #8f94fb;
-            --text-color: #333;
-            --bg-color: #f4f6f9;
-            --white: #ffffff;
-            --sidebar-width: 250px;
+            --primary: #006633; /* Pakistan Green */
+            --secondary: #ffffff;
+            --accent: #ffcc00;
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+            --blue: #007bff;
+            --purple: #6c5ce7;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
         body {
-            background-color: var(--bg-color);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
+            background-color: var(--light);
             display: flex;
             flex-direction: column;
-            padding: 20px;
-            position: fixed;
-            height: 100%;
-            left: 0;
-            top: 0;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .brand {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 40px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 20px;
+        /* --- HEADER --- */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: bold; }
+        .flag { font-size: 28px; }
+        .user-area { display: flex; align-items: center; gap: 15px; }
+        .btn-login {
+            background: white; color: var(--primary); border: none; padding: 8px 15px;
+            border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+
+        /* --- LAYOUT --- */
+        .container { display: flex; flex: 1; overflow: hidden; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-category {
+            padding: 10px 20px;
+            background: #eee;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         .nav-btn {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: var(--white);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 16px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: none; border: none; padding: 12px 20px; text-align: left;
+            cursor: pointer; font-size: 14px; color: #444; transition: 0.2s;
+            border-bottom: 1px solid #f9f9f9; display: flex; align-items: center; gap: 10px;
+        }
+        .nav-btn:hover { background: #f0f0f0; padding-left: 25px; }
+        .nav-btn.active { background: var(--primary); color: white; }
+
+        /* --- CONTENT --- */
+        .main-content { flex: 1; padding: 20px; overflow-y: auto; position: relative; }
+        .section { display: none; animation: fadein 0.3s; }
+        .section.active { display: block; }
+
+        @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- CARDS --- */
+        .card {
+            background: white; padding: 20px; border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px;
+        }
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h3 { color: #333; margin: 15px 0 10px 0; }
+
+        /* --- ENGLISH GRAMMAR SPECIFIC --- */
+        .level-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 20px; background: #eee; border: none; border-radius: 20px;
+            cursor: pointer; font-weight: 600; transition: 0.3s;
+        }
+        .tab-btn.active-tab { background: var(--blue); color: white; box-shadow: 0 4px 10px rgba(0,123,255,0.3); }
+        
+        .grammar-content { display: none; line-height: 1.8; color: #444; }
+        .grammar-content.active-gram { display: block; }
+        
+        .topic-box {
+            background: #f9f9f9; border-left: 4px solid var(--primary);
+            padding: 15px; margin-bottom: 15px; border-radius: 0 10px 10px 0;
+        }
+        .example-box {
+            background: #fff3cd; color: #856404; padding: 10px;
+            border-radius: 5px; margin-top: 5px; font-family: monospace;
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--white);
-            color: var(--primary-color);
-            font-weight: 600;
-        }
+        /* --- OLD TOOLS STYLES (Preserved) --- */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .dash-card { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .dash-card:hover { transform: scale(1.05); }
 
-        /* Main Content Styling */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 40px;
-            width: calc(100% - var(--sidebar-width));
-        }
+        /* Periodic Table */
+        .search-box { max-width: 300px; margin-bottom: 20px; }
+        .pt-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; }
+        .element { background: #e0e0e0; border: 1px solid #ccc; padding: 5px; text-align: center; font-size: 10px; cursor: pointer; border-radius: 4px; transition: 0.2s; }
+        .element:hover { background: var(--accent); color: black; z-index: 10; transform: scale(1.5); position: relative; }
+        
+        /* Math Tables */
+        .table-container { max-height: 300px; overflow-y: auto; border: 1px solid #eee; padding: 10px; border-radius: 10px; }
+        .table-row { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px dashed #ddd; font-size: 16px; }
+        
+        /* Quiz & Game */
+        .game-area { text-align: center; padding: 20px; }
+        .score-board { font-size: 24px; color: var(--primary); margin-bottom: 20px; font-weight: bold; }
+        .question { font-size: 28px; margin: 20px 0; color: #333; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .opt-btn { background: white; border: 2px solid var(--primary); color: var(--primary); padding: 15px; font-size: 18px; border-radius: 10px; cursor: pointer; }
+        .opt-btn:hover { background: var(--primary); color: white; }
 
-        header {
-            margin-bottom: 30px;
-        }
+        /* AI Chat */
+        .chat-box { height: 400px; border: 1px solid #ddd; background: #f9f9f9; border-radius: 10px; display: flex; flex-direction: column; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; }
+        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 15px; max-width: 70%; font-size: 14px; }
+        .msg.user { background: var(--primary); color: white; align-self: flex-end; margin-left: auto; }
+        .msg.bot { background: #e0e0e0; color: #333; align-self: flex-start; margin-right: auto; }
+        .chat-input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; background: white; border-radius: 0 0 10px 10px; }
+        .chat-input-area input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+        .send-btn { margin-left: 10px; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
 
-        header h1 {
-            color: var(--primary-color);
-            font-size: 32px;
-        }
+        /* Urdu */
+        .urdu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 8px; text-align: center; }
+        .urdu-char { font-size: 28px; background: white; border: 2px solid var(--primary); border-radius: 8px; padding: 10px; cursor: pointer; }
+        .urdu-char:hover { background: var(--accent); }
 
-        header p {
-            color: #666;
-        }
-
-        /* Tool Card Styling */
-        .tool-container {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            display: none; /* Hidden by default */
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tool-container.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            margin-bottom: 25px;
-            color: var(--text-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        /* Form Elements */
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        button.action-btn {
-            background: var(--primary-color);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button.action-btn:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .result-box {
-            margin-top: 25px;
-            padding: 15px;
-            background: #eef2ff;
-            border-left: 5px solid var(--primary-color);
-            border-radius: 4px;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                flex-direction: row;
-                overflow-x: auto;
-                padding: 10px;
-            }
-            .brand { display: none; }
-            .nav-btn { font-size: 14px; padding: 10px; white-space: nowrap; }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; }
+            .nav-btn { white-space: nowrap; border-bottom: none; border-right: 1px solid #eee; }
+            .sidebar-category { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <div class="brand">🚀 StudentTools</div>
-        <button class="nav-btn active" onclick="showTool('percentage')">📊 Percentage Calc</button>
-        <button class="nav-btn" onclick="showTool('age')">🎂 Age Calculator</button>
-        <button class="nav-btn" onclick="showTool('words')">📝 Word Counter</button>
-    </nav>
-
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <header>
-            <h1>Welcome, Student! 👋</h1>
-            <p>Select a tool from the menu to get started.</p>
-        </header>
-
-        <!-- Tool 1: Percentage Calculator -->
-        <div id="percentage" class="tool-container active">
-            <h2>Percentage Calculator</h2>
-            <div class="input-group">
-                <label>Total Marks</label>
-                <input type="number" id="totalMarks" placeholder="e.g. 500">
-            </div>
-            <div class="input-group">
-                <label>Obtained Marks</label>
-                <input type="number" id="obtainedMarks" placeholder="e.g. 420">
-            </div>
-            <button class="action-btn" onclick="calcPercentage()">Calculate Percentage</button>
-            <div class="result-box" id="percResult"></div>
+    <!-- HEADER -->
+    <header>
+        <div class="logo-area">
+            <span class="flag">🇵🇰</span>
+            <span>Pak Student Hub</span>
         </div>
-
-        <!-- Tool 2: Age Calculator -->
-        <div id="age" class="tool-container">
-            <h2>Age Calculator</h2>
-            <div class="input-group">
-                <label>Enter Your Birth Date</label>
-                <input type="date" id="birthDate">
-            </div>
-            <button class="action-btn" onclick="calcAge()">Calculate Age</button>
-            <div class="result-box" id="ageResult"></div>
+        <div class="user-area" id="auth-section">
+            <button class="btn-login" onclick="toggleLogin()">Login</button>
         </div>
+    </header>
 
-        <!-- Tool 3: Word Counter -->
-        <div id="words" class="tool-container">
-            <h2>Word & Character Counter</h2>
-            <div class="input-group">
-                <label>Paste your text or essay here:</label>
-                <textarea id="textInput" rows="6" placeholder="Start typing here..."></textarea>
-            </div>
-            <div class="result-box" id="wordResult">
-                Words: 0 | Characters: 0
-            </div>
-        </div>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <button class="nav-btn active" onclick="showSection('dashboard')">🏠 Dashboard</button>
+            
+            <div class="sidebar-category">Academics</div>
+            <button class="nav-btn" onclick="showSection('english-grammar')">📚 English Masterclass</button>
+            <button class="nav-btn" onclick="showSection('urdu-basics')">🇵🇰 Urdu Basics</button>
+            
+            <div class="sidebar-category">Math & Science</div>
+            <button class="nav-btn" onclick="showSection('math-tools')">🔢 Math Tables & Games</button>
+            <button class="nav-btn" onclick="showSection('periodic-table')">🧪 Periodic Table</button>
+            
+            <div class="sidebar-category">Utilities</div>
+            <button class="nav-btn" onclick="showSection('word-counter')">📝 Word Counter</button>
+            <button class="nav-btn" onclick="showSection('age-calc')">🎂 Age Calculator</button>
+            <button class="nav-btn" onclick="showSection('calendar')">📅 Calendar</button>
+            <button class="nav-btn" onclick="showSection('ai-chat')">🤖 AI Assistant</button>
+            <button class="nav-btn" onclick="showSection('earning')">💰 Earn / Offers</button>
+        </nav>
 
-    </main>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- 1. DASHBOARD -->
+            <div id="dashboard" class="section active">
+                <h2>Welcome! 👋</h2>
+                <div class="dashboard-grid">
+                    <div class="dash-card" onclick="showSection('english-grammar')">
+                        <h3>📚 English</h3>
+                        <p>Basic to Advanced</p>
+                    </div>
+                    <div class="dash-card" onclick="showSection('math-tools')">
+                        <h3>🔢 Math</h3>
+                        <p>Tables & Games</p>
+                    </div>
+                    <div class="dash-card" onclick="showSection('periodic-table')">
+                        <h3>🧪 Science</h3>
+                        <p>Elements</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ENGLISH GRAMMAR (NEW DETAILED VERSION) -->
+            <div id="english-grammar" class="section">
+                <h2>English Masterclass 📚</h2>
+                
+                <div class="level-tabs">
+                    <button class="tab-btn active-tab" onclick="showGramLevel('basic', this)">🟢 Basic</button>
+                    <button class="tab-btn" onclick="showGramLevel('inter', this)">🟡 Intermediate</button>
+                    <button class="tab-btn" onclick="showGramLevel('adv', this)">🔴 Advanced</button>
+                </div>
+
+                <!-- BASIC LEVEL -->
+                <div id="gram-basic" class="grammar-content active-gram">
+                    <div class="topic-box">
+                        <h3>✅ Parts of Speech</h3>
+                        <ul>
+                            <li><strong>Noun:</strong> Name of person, place, thing (e.g., Ali, Karachi).</li>
+                            <li><strong>Pronoun:</strong> Used instead of noun (e.g., He, She, It).</li>
+                            <li><strong>Verb:</strong> Action word (e.g., Run, Eat).</li>
+                            <li><strong>Adjective:</strong> Describes noun (e.g., Good, Red).</li>
+                            <li><strong>Adverb:</strong> Describes verb (e.g., Quickly, Slowly).</li>
+                            <li><strong>Preposition:</strong> Shows relationship (e.g., In, On, At).</li>
+                            <li><strong>Conjunction:</strong> Connects words (e.g., And, But).</li>
+                            <li><strong>Interjection:</strong> Expression of emotion (e.g., Wow!, Ouch!).</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Basic Tenses (Start of 12)</h3>
+                        <p>Present Simple: I play cricket. (Daily Habit)</p>
+                        <div class="example-box">Past Simple: I played cricket. (Finished Action)</div>
+                        <div class="example-box">Future Simple: I will play cricket. (Tomorrow)</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Sentence Structure</h3>
+                        <p>Subject + Verb + Object</p>
+                        <div class="example-box">Ali eats mango.</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Articles</h3>
+                        <p><strong>A:</strong> Used before consonant sounds (A cat).</p>
+                        <p><strong>An:</strong> Used before vowel sounds (An apple).</p>
+                        <p><strong>The:</strong> Used for specific things (The sun).</p>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Basic Prepositions</h3>
+                        <p>In (box), On (table), At (school), Under (chair), Behind (tree).</p>
+                    </div>
+                </div>
+
+                <!-- INTERMEDIATE LEVEL -->
+                <div id="gram-inter" class="grammar-content">
+                    <div class="topic-box">
+                        <h3>🔹 Intermediate Level: All 12 Tenses Detail</h3>
+                        <p><strong>Present Continuous:</strong> I am playing. (Right now)</p>
+                        <p><strong>Present Perfect:</strong> I have played. (Just finished)</p>
+                        <p><strong>Past Continuous:</strong> I was playing. (Was going on)</p>
+                        <p><strong>Past Perfect:</strong> I had played before he came.</p>
+                        <p><strong>Future Continuous:</strong> I will be playing tomorrow.</p>
+                        <p><strong>Future Perfect:</strong> I will have played by 5 PM.</p>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Modal Verbs</h3>
+                        <p>Can (Ability), Could (Past ability), May (Permission), Might (Possibility), Must (Obligation), Should (Advice).</p>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Active & Passive Voice</h3>
+                        <p><strong>Active:</strong> Ali wrote a letter. (Focus on Doer)</p>
+                        <div class="example-box"><strong>Passive:</strong> A letter was written by Ali. (Focus on Object)</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Direct & Indirect Speech</h3>
+                        <p><strong>Direct:</strong> He said, “I am tired.”</p>
+                        <div class="example-box"><strong>Indirect:</strong> He said that he was tired.</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Conditional Sentences</h3>
+                        <p><strong>Type 1:</strong> If you study, you will pass. (Real possibility)</p>
+                        <p><strong>Type 2:</strong> If I were rich, I would buy a car. (Unreal)</p>
+                    </div>
+                </div>
+
+                <!-- ADVANCED LEVEL -->
+                <div id="gram-adv" class="grammar-content">
+                    <div class="topic-box">
+                        <h3>🔹 Advanced Level</h3>
+                        <p>Yeh level fluent aur professional English ke liye hota hai.</p>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Complex & Compound Sentences</h3>
+                        <p><strong>Compound:</strong> I like coffee, but my brother likes tea.</p>
+                        <div class="example-box"><strong>Complex:</strong> Although it was raining, we went outside.</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Relative Clauses</h3>
+                        <p>Connecting two sentences using Who, Which, That.</p>
+                        <div class="example-box">The boy <strong>who is playing</strong> is my brother.</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Gerunds & Infinitives</h3>
+                        <p><strong>Gerund (Verb+ing as noun):</strong> I enjoy <strong>reading</strong>.</p>
+                        <div class="example-box"><strong>Infinitive (To + Verb):</strong> I want <strong>to learn</strong> English.</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Subjunctive Mood</h3>
+                        <p>Used for wishes or hypothetical situations.</p>
+                        <div class="example-box">I wish I <strong>were</strong> rich. (Not 'was')</div>
+                    </div>
+
+                    <div class="topic-box">
+                        <h3>✅ Phrasal Verbs</h3>
+                        <ul>
+                            <li><strong>Give up:</strong> Chorna (Quit)</li>
+                            <li><strong>Look after:</strong> Dekhbhal karna (Take care)</li>
+                            <li><strong>Run into:</strong> Achanak milna (Meet by accident)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MATH TOOLS (Old: Tables, Quiz, Game, Calc) -->
+            <div id="math-tools" class="section">
+                <h2>Math Tools & Games 🔢</h2>
+                
+                <!-- Tabs for Math -->
+                <div class="level-tabs">
+                    <button class="tab-btn active-tab" onclick="showMathTab('m-tables', this)">Tables 1-20</button>
+                    <button class="tab-btn" onclick="showMathTab('m-quiz', this)">Table Quiz</button>
+                    <button class="tab-btn" onclick="showMathTab('m-game', this)">Math Puzzle</button>
+                    <button class="tab-btn" onclick="showMathTab('m-calc', this)">Calculator</button>
+                </div>
+
+                <!-- Tables -->
+                <div id="m-tables" class="math-content grammar-content active-gram">
+                    <div class="card">
+                        <label>Konsi table chahiye? (1-20):</label>
+                        <select id="table-num" onchange="generateTable()" style="padding:10px; width:100%; border:2px solid #ddd; border-radius:5px;">
+                            <!-- Options generated by JS -->
+                        </select>
+                        <div id="table-display" class="table-container" style="margin-top:15px;"></div>
+                    </div>
+                </div>
+
+                <!-- Quiz -->
+                <div id="m-quiz" class="math-content grammar-content">
+                    <div class="card game-area">
+                        <div class="score-board">Score: <span id="quiz-score">0</span></div>
+                        <div id="quiz-setup">
+                            <input type="number" id="quiz-table-num" placeholder="Number (e.g. 5)" style="padding:10px; width:200px;">
+                            <button class="btn-login" style="background:var(--primary); color:white; margin-top:10px;" onclick="startQuiz()">Start Quiz</button>
+                        </div>
+                        <div id="quiz-play" style="display:none;">
+                            <div class="question" id="quiz-question">5 x 3 = ?</div>
+                            <input type="number" id="quiz-answer" placeholder="Jawab" style="padding:10px; width:150px; text-align:center; font-size:18px;">
+                            <br>
+                            <button class="btn-login" style="background:var(--success); color:white; margin-top:10px;" onclick="checkQuizAnswer()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Puzzle Game -->
+                <div id="m-game" class="math-content grammar-content">
+                    <div class="card game-area">
+                        <div class="score-board">Score: <span id="game-score">0</span></div>
+                        <div class="question" id="game-question">10 + 5 = ?</div>
+                        <div class="options-grid" id="game-options"></div>
+                        <button class="btn-login" style="background:var(--primary); color:white; margin-top:20px;" onclick="initGame()">New Game</button>
+                    </div>
+                </div>
+
+                <!-- Calculator -->
+                <div id="m-calc" class="math-content grammar-content">
+                    <div class="card">
+                        <input type="number" id="calc-num1" placeholder="Num 1" style="width:30%"> 
+                        <select id="calc-op" style="width:10%; padding:10px;"> <option>+</option> <option>-</option> <option>*</option> <option>/</option> </select>
+                        <input type="number" id="calc-num2" placeholder="Num 2" style="width:30%">
+                        <button class="btn-login" style="background:var(--primary); color:white;" onclick="calcMath()">=</button>
+                        <h3 id="calc-result" style="margin-top:15px; color:var(--primary);"></h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. PERIODIC TABLE (Old) -->
+            <div id="periodic-table" class="section">
+                <h2>Periodic Table 🧪</h2>
+                <div class="card">
+                    <input type="text" id="pt-search" class="search-box" placeholder="Search Element (e.g. Iron)..." onkeyup="filterPT()" style="padding:10px; width:100%; border:2px solid #ddd; border-radius:5px;">
+                    <div class="pt-grid" id="pt-container"></div>
+                </div>
+            </div>
+
+            <!-- 5. WORD COUNTER (Old) -->
+            <div id="word-counter" class="section">
+                <h2>Word Counter 📝</h2>
+                <div class="card">
+                    <textarea id="text-input" rows="6" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:5px;" placeholder="Yahan text likhein..."></textarea>
+                    <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                        <span>Words: <b id="w-count">0</b></span>
+                        <span>Chars: <b id="c-count">0</b></span>
+                    </div>
+                    <div style="margin-top:15px;">
+                        <button class="btn-login" style="background:var(--danger); color:white;" onclick="document.getElementById('text-input').value=''; updateCount();">Clear</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. AGE CALC (Old) -->
+            <div id="age-calc" class="section">
+                <h2>Age Calculator 🎂</h2>
+                <div class="card">
+                    <label>Date of Birth:</label>
+                    <input type="date" id="dob" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:5px;">
+                    <button class="btn-login" style="background:var(--primary); color:white; margin-top:10px;" onclick="calcAge()">Calculate</button>
+                    <h3 id="age-result" style="margin-top:20px; color:var(--primary);"></h3>
+                </div>
+            </div>
+
+            <!-- 7. URDU (Old) -->
+            <div id="urdu-basics" class="section">
+                <h2>Urdu Learning 🇵🇰</h2>
+                <div class="card">
+                    <h3>Haroof-e-Tahajji</h3>
+                    <div class="urdu-grid" id="urdu-letters"></div>
+                    <h3 style="margin-top:20px;">Basic Words</h3>
+                    <p>کتاب (Book) | قلم (Pen) | اسکول (School)</p>
+                </div>
+            </div>
+
+            <!-- 8. CALENDAR (Old) -->
+            <div id="calendar" class="section">
+                <h2>Calendar 📅</h2>
+                <div class="card">
+                    <h3 id="month-year-display"></h3>
+                    <div class="pt-grid" id="calendar-days" style="grid-template-columns: repeat(7, 1fr); text-align:center;"></div>
+                </div>
+            </div>
+
+            <!-- 9. AI CHAT (Old) -->
+            <div id="ai-chat" class="section">
+                <h2>AI Assistant 🤖</h2>
+                <div class="chat-box">
+                    <div class="chat-messages" id="chat-msgs">
+                        <div class="msg bot">Assalam-o-Alaikum! Main aapki madad ke liye hazir hoon.</div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" placeholder="Msg likhein..." onkeypress="handleEnter(event)">
+                        <button class="send-btn" onclick="sendMessage()">➤</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. EARNING (Old) -->
+            <div id="earning" class="section">
+                <h2>Earn & Offers 💰</h2>
+                <div class="card">
+                    <h3>Sponsored</h3>
+                    <p>Yahan apne Ads ya Affiliate links lagayein.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
 
     <script>
-        // Navigation Logic
-        function showTool(toolId) {
-            // Hide all tools
-            document.querySelectorAll('.tool-container').forEach(div => {
-                div.classList.remove('active');
-            });
-            // Remove active class from buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tool
-            document.getElementById(toolId).classList.add('active');
-            
-            // Highlight button (Find button that calls this function)
-            const buttons = document.querySelectorAll('.nav-btn');
-            if(toolId === 'percentage') buttons[0].classList.add('active');
-            if(toolId === 'age') buttons[1].classList.add('active');
-            if(toolId === 'words') buttons[2].classList.add('active');
+        /* --- 1. AUTH SYSTEM --- */
+        let user = localStorage.getItem('studentUser');
+        function updateAuth() {
+            const sec = document.getElementById('auth-section');
+            sec.innerHTML = user ? `<span>👤 ${user}</span><button class="btn-login" onclick="toggleLogin()">Logout</button>` : `<button class="btn-login" onclick="toggleLogin()">Login</button>`;
+        }
+        updateAuth();
+        function toggleLogin() {
+            if(user) { localStorage.removeItem('studentUser'); user=null; alert('Logged out'); }
+            else { let n=prompt("Naam likhein:"); if(n){ user=n; localStorage.setItem('studentUser', n); alert('Welcome '+n); } }
+            updateAuth();
         }
 
-        // Logic: Percentage Calculator
-        function calcPercentage() {
-            let total = document.getElementById('totalMarks').value;
-            let obtained = document.getElementById('obtainedMarks').value;
-            let result = document.getElementById('percResult');
-
-            if (total === '' || obtained === '') {
-                result.style.color = "red";
-                result.innerText = "Please fill both fields.";
-            } else {
-                let perc = (obtained / total) * 100;
-                result.style.color = "var(--primary-color)";
-                result.innerText = "Your Percentage: " + perc.toFixed(2) + "%";
-            }
+        /* --- 2. NAVIGATION --- */
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(e => e.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
         }
 
-        // Logic: Age Calculator
-        function calcAge() {
-            let inputDate = document.getElementById('birthDate').value;
-            let result = document.getElementById('ageResult');
-
-            if (!inputDate) {
-                result.style.color = "red";
-                result.innerText = "Please select a date.";
-                return;
-            }
-
-            let birthDate = new Date(inputDate);
-            let today = new Date();
-            
-            if (birthDate > today) {
-                result.style.color = "red";
-                result.innerText = "Birth date cannot be in future!";
-                return;
-            }
-
-            let age = today.getFullYear() - birthDate.getFullYear();
-            let m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-
-            result.style.color = "var(--primary-color)";
-            result.innerText = "You are " + age + " years old.";
+        /* --- 3. ENGLISH TABS --- */
+        function showGramLevel(id, btn) {
+            document.querySelectorAll('.grammar-content').forEach(e => e.classList.remove('active-gram'));
+            document.getElementById('gram-'+id).classList.add('active-gram');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            btn.classList.add('active-tab');
         }
 
-        // Logic: Word Counter
-        document.getElementById('textInput').addEventListener('input', function() {
-            let text = this.value;
-            let charCount = text.length;
-            // Handle multiple spaces for word count
-            let wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-            
-            document.getElementById('wordResult').innerText = 
-                "Words: " + wordCount + " | Characters: " + charCount;
+        /* --- 4. MATH TABS --- */
+        function showMathTab(id, btn) {
+            document.querySelectorAll('.math-content').forEach(e => e.classList.remove('active-gram'));
+            document.getElementById(id).classList.add('active-gram');
+            btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            btn.classList.add('active-tab');
+        }
+
+        /* --- 5. MATH LOGIC --- */
+        // Table Gen
+        const sel = document.getElementById('table-num');
+        for(let i=1;i<=20;i++) { let op = document.createElement('option'); op.value=i; op.innerText="Table of "+i; sel.appendChild(op); }
+        function generateTable() {
+            const n = document.getElementById('table-num').value;
+            const box = document.getElementById('table-display');
+            box.innerHTML = '';
+            for(let i=1; i<=10; i++) {
+                box.innerHTML += `<div class="table-row"><span>${n} x ${i}</span><span>= ${n*i}</span></div>`;
+            }
+        }
+        generateTable();
+
+        // Quiz Logic
+        let qScore=0, qNum=0, qTable=0;
+        function startQuiz() {
+            qTable = document.getElementById('quiz-table-num').value;
+            if(!qTable) return alert('Number daalein');
+            qScore=0; qNum=1; document.getElementById('quiz-score').innerText=0;
+            document.getElementById('quiz-setup').style.display='none';
+            document.getElementById('quiz-play').style.display='block';
+            nextQ();
+        }
+        function nextQ() {
+            if(qNum>10) { alert('Quiz Over! Score: '+qScore); document.getElementById('quiz-play').style.display='none'; document.getElementById('quiz-setup').style.display='block'; return; }
+            document.getElementById('quiz-question').innerText = `${qTable} x ${qNum} = ?`;
+            document.getElementById('quiz-answer').value=''; document.getElementById('quiz-answer').focus();
+        }
+        function checkQuizAnswer() {
+            let ans = parseInt(document.getElementById('quiz-answer').value);
+            if(ans === qTable*qNum) { qScore++; document.getElementById('quiz-score').innerText=qScore; alert('Sahi!'); }
+            else alert('Galat! Sahi: '+(qTable*qNum));
+            qNum++; nextQ();
+        }
+
+        // Game Logic
+        let gScore=0;
+        function initGame() {
+            gScore=0; document.getElementById('game-score').innerText=0; nextLvl();
+        }
+        function nextLvl() {
+            let n1=Math.floor(Math.random()*10)+1, n2=Math.floor(Math.random()*10)+1, ops=['+','-','*'], op=ops[Math.floor(Math.random()*3)];
+            let cAns = eval(n1+op+n2); if(cAns<0)cAns=0;
+            document.getElementById('game-question').innerText = `${n1} ${op} ${n2} = ?`;
+            let opts=[cAns]; while(opts.length<4) { let w=cAns+Math.floor(Math.random()*10)-5; if(w>=0 && w!==cAns && !opts.includes(w)) opts.push(w); }
+            opts.sort(()=>Math.random()-0.5);
+            let div=document.getElementById('game-options'); div.innerHTML='';
+            opts.forEach(o => { let b=document.createElement('button'); b.className='opt-btn'; b.innerText=o; b.onclick=()=>checkG(o,cAns); div.appendChild(b); });
+        }
+        function checkG(sel, cor) {
+            if(sel===cor) { gScore+=10; document.getElementById('game-score').innerText=gScore; alert('Good! +10'); nextLvl(); }
+            else { alert('Game Over'); }
+        }
+
+        // Calc Logic
+        function calcMath() {
+            let n1=parseFloat(document.getElementById('calc-num1').value), n2=parseFloat(document.getElementById('calc-num2').value), op=document.getElementById('calc-op').value;
+            if(isNaN(n1)||isNaN(n2)) return;
+            let r=0; if(op==='+')r=n1+n2; else if(op==='-')r=n1-n2; else if(op==='*')r=n1*n2; else if(op==='/')r=n1/n2;
+            document.getElementById('calc-result').innerText="Result: "+r;
+        }
+
+        /* --- 6. WORD COUNTER --- */
+        document.getElementById('text-input').addEventListener('input', updateCount);
+        function updateCount() {
+            let t=document.getElementById('text-input').value;
+            document.getElementById('c-count').innerText=t.length;
+            document.getElementById('w-count').innerText=t.trim()===''?0:t.trim().split(/\s+/).length;
+        }
+
+        /* --- 7. PERIODIC TABLE --- */
+        const els = [
+            {n:1,s:'H',name:'Hydrogen'},{n:2,s:'He',name:'Helium'},{n:3,s:'Li',name:'Lithium'},{n:4,s:'Be',name:'Beryllium'},{n:5,s:'B',name:'Boron'},{n:6,s:'C',name:'Carbon'},{n:7,s:'N',name:'Nitrogen'},{n:8,s:'O',name:'Oxygen'},{n:9,s:'F',name:'Fluorine'},{n:10,s:'Ne',name:'Neon'},
+            {n:11,s:'Na',name:'Sodium'},{n:12,s:'Mg',name:'Magnesium'},{n:13,s:'Al',name:'Aluminium'},{n:14,s:'Si',name:'Silicon'},{n:15,s:'P',name:'Phosphorus'},{n:16,s:'S',name:'Sulfur'},{n:17,s:'Cl',name:'Chlorine'},{n:18,s:'Ar',name:'Argon'},
+            {n:19,s:'K',name:'Potassium'},{n:20,s:'Ca',name:'Calcium'},{n:26,s:'Fe',name:'Iron'},{n:29,s:'Cu',name:'Copper'},{n:30,s:'Zn',name:'Zinc'},{n:47,s:'Ag',name:'Silver'},{n:79,s:'Au',name:'Gold'}
+        ];
+        const ptC = document.getElementById('pt-container');
+        els.forEach(e => {
+            let d = document.createElement('div'); d.className='element';
+            d.innerHTML=`<span style="font-weight:bold">${e.n}</span><br>${e.s}<br><small>${e.name}</small>`;
+            ptC.appendChild(d);
         });
-    </script>
+        function filterPT() {
+            let t=document.getElementById('pt-search').value.toLowerCase();
+            Array.from(document.getElementsByClassName('element')).forEach(d => {
+                d.style.display = d.innerText.toLowerCase().includes(t)?'block':'none';
+                if(t && d.innerText.toLowerCase().includes(t)) d.style.background='#ffcc00';
+                else d.style.background='#e0e0e0';
+            });
+        }
 
+        /* --- 8. AGE CALC --- */
+        function calcAge() {
+            let d = new Date(document.getElementById('dob').value);
+            if(!d.value) return;
+            let age = new Date().getFullYear() - d.getFullYear();
+            document.getElementById('age-result').innerText = "Age: " + age + " years (Approx)";
+        }
+
+        /* --- 9. URDU --- */
+        const uc = ["ا","ب","پ","ت","ٹ","ث","ج","چ","ح","خ","د","ڈ","ذ","ر","ڑ","ز","ژ","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ک","گ","ل","م","ن","ں","و","ہ","ھ","ء","ی","ے"];
+        const uDiv = document.getElementById('urdu-letters');
+        uc.forEach(c => { let d=document.createElement('div'); d.className='urdu-char'; d.innerText=c; uDiv.appendChild(d); });
+
+        /* --- 10. CALENDAR --- */
+        function loadCal() {
+            let d=new Date(), m=d.getMonth(), y=d.getFullYear();
+            document.getElementById('month-year-display').innerText = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+            let fd=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate();
+            let grid=document.getElementById('calendar-days'); grid.innerHTML='';
+            ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(x=>{ let dv=document.createElement('div'); dv.style.fontWeight='bold'; dv.innerText=x; grid.appendChild(dv); });
+            for(let i=0;i<fd;i++) grid.appendChild(document.createElement('div'));
+            for(let i=1;i<=dim;i++) { let dv=document.createElement('div'); dv.className='cal-day'; dv.innerText=i; if(i===d.getDate()) dv.style.background='var(--primary)'; dv.style.color='white'; grid.appendChild(dv); }
+        }
+        loadCal();
+
+        /* --- 11. AI CHAT --- */
+        function handleEnter(e){ if(e.key==='Enter') sendMessage(); }
+        function sendMessage() {
+            let inp=document.getElementById('user-input'), t=inp.value.trim();
+            if(!t) return;
+            document.getElementById('chat-msgs').innerHTML+=`<div class="msg user">${t}</div>`;
+            inp.value='';
+            setTimeout(()=>{
+                let r="Main samajh nahi paya.";
+                if(t.toLowerCase().includes('hello')) r="Hello! Kya help chahiye?";
+                else if(t.toLowerCase().includes('grammar')) r="English Masterclass mein grammar notes hain.";
+                else if(t.toLowerCase().includes('table')) r="Math Tools mein tables aur quiz hain.";
+                document.getElementById('chat-msgs').innerHTML+=`<div class="msg bot">${r}</div>`;
+                document.getElementById('chat-msgs').scrollTop=9999;
+            },500);
+            document.getElementById('chat-msgs').scrollTop=9999;
+        }
+    </script>
 </body>
 </html>
