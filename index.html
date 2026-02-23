@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags (Ye Google ko samjhane ke liye hain) -->
+    <title>Free Online Percentage Calculator for Students</title>
+    <meta name="description" content="Check your exam marks and percentage instantly with our free online calculator. Fast and easy tool for students.">
+    <meta name="keywords" content="percentage calculator, marks calculator, student tool, free online calculator">
+    
+    <style>
+        /* Design CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 300px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Percentage Calculator</h2>
+        <input type="number" id="totalMarks" placeholder="Total Marks (e.g. 500)">
+        <input type="number" id="obtainedMarks" placeholder="Obtained Marks (e.g. 400)">
+        <button onclick="calculate()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Logic JavaScript
+        function calculate() {
+            let total = document.getElementById('totalMarks').value;
+            let obtained = document.getElementById('obtainedMarks').value;
+            let resultDiv = document.getElementById('result');
+
+            if (total === '' || obtained === '') {
+                resultDiv.innerText = "Kripya dono boxes bharein!";
+                resultDiv.style.color = "red";
+                return;
+            }
+
+            let percentage = (obtained / total) * 100;
+
+            resultDiv.innerText = "Aapka Percentage: " + percentage.toFixed(2) + "%";
+            resultDiv.style.color = "#007bff";
+        }
+    </script>
+
+</body>
+</html>
