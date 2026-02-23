@@ -3,93 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Tools Pro - Free Online Utilities</title>
+    <meta name="description" content="Best free online tools for students: Percentage Calculator, Age Calculator, and Word Counter.">
     
-    <!-- SEO Meta Tags (Ye Google ko samjhane ke liye hain) -->
-    <title>Free Online Percentage Calculator for Students</title>
-    <meta name="description" content="Check your exam marks and percentage instantly with our free online calculator. Fast and easy tool for students.">
-    <meta name="keywords" content="percentage calculator, marks calculator, student tool, free online calculator">
+    <!-- Google Fonts for Professional Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* Design CSS */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* CSS Variables for Theme */
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --text-color: #333;
+            --bg-color: #f4f6f9;
+            --white: #ffffff;
+            --sidebar-width: 250px;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            left: 0;
+            top: 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 40px;
             text-align: center;
-            width: 300px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 20px;
         }
-        h2 {
-            color: #333;
-            margin-top: 0;
-        }
-        input {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
             border: none;
-            border-radius: 5px;
+            color: var(--white);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--white);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 32px;
+        }
+
+        header p {
+            color: #666;
+        }
+
+        /* Tool Card Styling */
+        .tool-container {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tool-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: var(--text-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        button.action-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: 0.3s;
         }
-        button:hover {
-            background-color: #218838;
+
+        button.action-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
         }
-        .result {
-            margin-top: 20px;
+
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #eef2ff;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
             font-size: 18px;
-            font-weight: bold;
-            color: #007bff;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px;
+            }
+            .brand { display: none; }
+            .nav-btn { font-size: 14px; padding: 10px; white-space: nowrap; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Percentage Calculator</h2>
-        <input type="number" id="totalMarks" placeholder="Total Marks (e.g. 500)">
-        <input type="number" id="obtainedMarks" placeholder="Obtained Marks (e.g. 400)">
-        <button onclick="calculate()">Calculate</button>
-        <div class="result" id="result"></div>
-    </div>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="brand">🚀 StudentTools</div>
+        <button class="nav-btn active" onclick="showTool('percentage')">📊 Percentage Calc</button>
+        <button class="nav-btn" onclick="showTool('age')">🎂 Age Calculator</button>
+        <button class="nav-btn" onclick="showTool('words')">📝 Word Counter</button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <header>
+            <h1>Welcome, Student! 👋</h1>
+            <p>Select a tool from the menu to get started.</p>
+        </header>
+
+        <!-- Tool 1: Percentage Calculator -->
+        <div id="percentage" class="tool-container active">
+            <h2>Percentage Calculator</h2>
+            <div class="input-group">
+                <label>Total Marks</label>
+                <input type="number" id="totalMarks" placeholder="e.g. 500">
+            </div>
+            <div class="input-group">
+                <label>Obtained Marks</label>
+                <input type="number" id="obtainedMarks" placeholder="e.g. 420">
+            </div>
+            <button class="action-btn" onclick="calcPercentage()">Calculate Percentage</button>
+            <div class="result-box" id="percResult"></div>
+        </div>
+
+        <!-- Tool 2: Age Calculator -->
+        <div id="age" class="tool-container">
+            <h2>Age Calculator</h2>
+            <div class="input-group">
+                <label>Enter Your Birth Date</label>
+                <input type="date" id="birthDate">
+            </div>
+            <button class="action-btn" onclick="calcAge()">Calculate Age</button>
+            <div class="result-box" id="ageResult"></div>
+        </div>
+
+        <!-- Tool 3: Word Counter -->
+        <div id="words" class="tool-container">
+            <h2>Word & Character Counter</h2>
+            <div class="input-group">
+                <label>Paste your text or essay here:</label>
+                <textarea id="textInput" rows="6" placeholder="Start typing here..."></textarea>
+            </div>
+            <div class="result-box" id="wordResult">
+                Words: 0 | Characters: 0
+            </div>
+        </div>
+
+    </main>
 
     <script>
-        // Logic JavaScript
-        function calculate() {
+        // Navigation Logic
+        function showTool(toolId) {
+            // Hide all tools
+            document.querySelectorAll('.tool-container').forEach(div => {
+                div.classList.remove('active');
+            });
+            // Remove active class from buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tool
+            document.getElementById(toolId).classList.add('active');
+            
+            // Highlight button (Find button that calls this function)
+            const buttons = document.querySelectorAll('.nav-btn');
+            if(toolId === 'percentage') buttons[0].classList.add('active');
+            if(toolId === 'age') buttons[1].classList.add('active');
+            if(toolId === 'words') buttons[2].classList.add('active');
+        }
+
+        // Logic: Percentage Calculator
+        function calcPercentage() {
             let total = document.getElementById('totalMarks').value;
             let obtained = document.getElementById('obtainedMarks').value;
-            let resultDiv = document.getElementById('result');
+            let result = document.getElementById('percResult');
 
             if (total === '' || obtained === '') {
-                resultDiv.innerText = "Kripya dono boxes bharein!";
-                resultDiv.style.color = "red";
+                result.style.color = "red";
+                result.innerText = "Please fill both fields.";
+            } else {
+                let perc = (obtained / total) * 100;
+                result.style.color = "var(--primary-color)";
+                result.innerText = "Your Percentage: " + perc.toFixed(2) + "%";
+            }
+        }
+
+        // Logic: Age Calculator
+        function calcAge() {
+            let inputDate = document.getElementById('birthDate').value;
+            let result = document.getElementById('ageResult');
+
+            if (!inputDate) {
+                result.style.color = "red";
+                result.innerText = "Please select a date.";
                 return;
             }
 
-            let percentage = (obtained / total) * 100;
+            let birthDate = new Date(inputDate);
+            let today = new Date();
+            
+            if (birthDate > today) {
+                result.style.color = "red";
+                result.innerText = "Birth date cannot be in future!";
+                return;
+            }
 
-            resultDiv.innerText = "Aapka Percentage: " + percentage.toFixed(2) + "%";
-            resultDiv.style.color = "#007bff";
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            result.style.color = "var(--primary-color)";
+            result.innerText = "You are " + age + " years old.";
         }
+
+        // Logic: Word Counter
+        document.getElementById('textInput').addEventListener('input', function() {
+            let text = this.value;
+            let charCount = text.length;
+            // Handle multiple spaces for word count
+            let wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            
+            document.getElementById('wordResult').innerText = 
+                "Words: " + wordCount + " | Characters: " + charCount;
+        });
     </script>
 
 </body>
